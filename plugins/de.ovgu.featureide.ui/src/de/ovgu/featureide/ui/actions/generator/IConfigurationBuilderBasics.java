@@ -58,6 +58,21 @@ public interface IConfigurationBuilderBasics {
 		ICPL, CHVATAL, CASA, INCLING
 	}
 
+	enum Random {
+		RANDOM("Random"), UNIFORM_RANDOM("UniformRandom");
+
+		private final String text;
+
+		public String getText() {
+			return text;
+		}
+
+		private Random(String text) {
+			this.text = text;
+		}
+
+	}
+
 	/** Saves the toggle state whether new projects should be generated for each configuration. **/
 	QualifiedName TOGGLE_STATE =
 		new QualifiedName(IConfigurationBuilderBasics.class.getName() + "#CreateNewProject", IConfigurationBuilderBasics.class.getName() + "#CreateNewProject");

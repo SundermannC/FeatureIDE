@@ -65,6 +65,7 @@ import de.ovgu.featureide.ui.actions.generator.configuration.ICPLConfigurationGe
 import de.ovgu.featureide.ui.actions.generator.configuration.IncLingConfigurationGenerator;
 import de.ovgu.featureide.ui.actions.generator.configuration.ModuleConfigurationGenerator;
 import de.ovgu.featureide.ui.actions.generator.configuration.RandConfigurationGenerator;
+import de.ovgu.featureide.ui.actions.generator.configuration.UniformRandomConfigurationGenerator;
 import de.ovgu.featureide.ui.actions.generator.sorter.AbstractConfigurationSorter;
 import de.ovgu.featureide.ui.actions.generator.sorter.InteractionSorter;
 import de.ovgu.featureide.ui.actions.generator.sorter.PriorizationSorter;
@@ -265,12 +266,19 @@ public class ConfigurationBuilder implements IConfigurationBuilderBasics {
 			} else if (algorithm.equals("CASA")) {
 				configurationGenerator = new CASAConfigurationGenerator(this, featureModel, t);
 			} else {
-				throw new RuntimeException(buildType + " not supported");
+				throw new RuntimeException(algorithm + " not supported");
 			}
 			jobName = JOB_TITLE_T_WISE;
 			break;
 		case RANDOM:
-			configurationGenerator = new RandConfigurationGenerator(this, featureModel);
+			if (algorithm.equals(Random.RANDOM.getText())) {
+				configurationGenerator = new RandConfigurationGenerator(this, featureModel);
+			} else if (algorithm.equals(Random.UNIFORM_RANDOM.getText())) {
+				System.out.println("I would love to create uniform random samples");
+				configurationGenerator = new UniformRandomConfigurationGenerator(this, featureModel);
+			} else {
+				throw new RuntimeException(algorithm + " not supported");
+			}
 			jobName = JOB_TITLE_RANDOM;
 			break;
 		case INTEGRATION:

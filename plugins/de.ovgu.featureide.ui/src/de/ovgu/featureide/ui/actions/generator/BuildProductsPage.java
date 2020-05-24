@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
@@ -187,21 +188,49 @@ public class BuildProductsPage extends WizardPage implements IConfigurationBuild
 		}
 		comboGenerate.setText(generate);
 
+		comboGenerate.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (comboGenerate.getSelectionIndex() == 2) {
+					comboAlgorithm.removeAll();
+					for (final TWise tWise : TWise.values()) {
+						final String tWiseText = getTWiseText(tWise);
+						if (tWiseText != null) {
+							comboAlgorithm.add(tWiseText);
+						}
+						comboAlgorithm.select(0);
+						comboAlgorithm.setEnabled(true);
+					}
+				} else if (comboGenerate.getSelectionIndex() == 3) {
+					comboAlgorithm.removeAll();
+					for (final Random random : Random.values()) {
+						comboAlgorithm.add(random.getText());
+					}
+					comboAlgorithm.setEnabled(true);
+					comboAlgorithm.select(0);
+				} else {
+					comboAlgorithm.setEnabled(false);
+				}
+			}
+		});
+
 		final Label labelAlgorithm = new Label(groupDeriveConf, SWT.NULL);
 		labelAlgorithm.setText(LABEL_ALGORITHM);
 		labelAlgorithm.setToolTipText(TOOL_TIP_T_WISE);
 		labelAlgorithm.setLayoutData(gd_LeftColumnInsideGroup);
 		labels.add(labelAlgorithm);
+
 		comboAlgorithm = new Combo(groupDeriveConf, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 
-		for (final TWise tWise : TWise.values()) {
-			final String tWiseText = getTWiseText(tWise);
-			if (tWiseText != null) {
-				comboAlgorithm.add(tWiseText);
-			}
-		}
-		comboAlgorithm.setText(algorithm);
-		comboAlgorithm.setEnabled(comboGenerate.getText().equals(T_WISE_CONFIGURATIONS));
+//		for (final TWise tWise : TWise.values()) {
+//			final String tWiseText = getTWiseText(tWise);
+//			if (tWiseText != null) {
+//				comboAlgorithm.add(tWiseText);
+//			}
+//		}
+//		comboAlgorithm.setText(algorithm);
+//		comboAlgorithm.setEnabled(comboGenerate.getText().equals(T_WISE_CONFIGURATIONS));
 
 		labelTWise = new Label(groupDeriveConf, SWT.NULL);
 		labelTWise.setText(LABEL_INTERACTIONS + "10");
