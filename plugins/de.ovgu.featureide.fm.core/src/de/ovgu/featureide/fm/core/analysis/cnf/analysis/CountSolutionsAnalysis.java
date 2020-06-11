@@ -20,12 +20,12 @@
  */
 package de.ovgu.featureide.fm.core.analysis.cnf.analysis;
 
+import java.math.BigInteger;
+
 import de.ovgu.featureide.fm.core.analysis.cnf.CNF;
-import de.ovgu.featureide.fm.core.analysis.cnf.LiteralSet;
-import de.ovgu.featureide.fm.core.analysis.cnf.LiteralSet.Order;
 import de.ovgu.featureide.fm.core.analysis.cnf.solver.ISatSolver;
-import de.ovgu.featureide.fm.core.analysis.cnf.solver.ISimpleSatSolver.SatResult;
-import de.ovgu.featureide.fm.core.analysis.cnf.solver.RuntimeContradictionException;
+import de.ovgu.featureide.fm.core.analysis.ddnnf.solver.ComparableDsharp;
+import de.ovgu.featureide.fm.core.analysis.ddnnf.solver.IComparableSolver;
 import de.ovgu.featureide.fm.core.job.monitor.IMonitor;
 
 /**
@@ -33,32 +33,23 @@ import de.ovgu.featureide.fm.core.job.monitor.IMonitor;
  *
  * @author Sebastian Krieter
  */
-public class CountSolutionsAnalysis extends AbstractAnalysis<Long> {
+public class CountSolutionsAnalysis extends AbstractAnalysis<BigInteger> {
 
 	public CountSolutionsAnalysis(ISatSolver solver) {
 		super(solver);
 	}
 
-	public CountSolutionsAnalysis(CNF satInstance) {
+	public CountSolutionsAnalysis(CNF satInstance, int timeout) {
 		super(satInstance);
+		setTimeout(timeout);
 	}
 
 	@Override
-	public Long analyze(IMonitor<Long> monitor) throws Exception {
-		solver.setGlobalTimeout(true);
-		long solutionCount = 0;
-		SatResult hasSolution = solver.hasSolution();
-		while (hasSolution == SatResult.TRUE) {
-			solutionCount++;
-			final int[] solution = solver.getSolution();
-			try {
-				solver.addClause(new LiteralSet(solution, Order.INDEX, false).negate());
-			} catch (final RuntimeContradictionException e) {
-				break;
-			}
-			hasSolution = solver.hasSolution();
-		}
-		return hasSolution == SatResult.TIMEOUT ? -(solutionCount + 1) : solutionCount;
+	public BigInteger analyze(IMonitor<BigInteger> monitor) throws Exception {
+		final IComparableSolver sharpsat = new ComparableDsharp(8000);
+		final BigInteger result = sharpsat.executeSolver(solver.getSatInstance(), getTimeout(), false).result;
+
+		return result;
 	}
 
 }

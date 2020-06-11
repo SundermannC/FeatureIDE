@@ -44,6 +44,8 @@ public class FeatureProperties {
 
 	private final EnumSet<FeatureStatus> featureStatus = EnumSet.noneOf(FeatureStatus.class);
 
+	private Double commonality;
+
 	protected final IFeature feature;
 
 	/**
@@ -109,6 +111,14 @@ public class FeatureProperties {
 
 	public void setDeadExplanation(Explanation<?> deadExplanation) {
 		this.deadExplanation = deadExplanation;
+	}
+
+	public void setCommonality(Double commonality) {
+		this.commonality = commonality;
+	}
+
+	public Double getCommonality() {
+		return commonality;
 	}
 
 }

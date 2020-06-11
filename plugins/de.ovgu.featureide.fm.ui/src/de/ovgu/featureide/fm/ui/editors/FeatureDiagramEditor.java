@@ -149,6 +149,7 @@ import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.SelectSubtreeAction
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.SelectionAction;
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.ShowCollapsedConstraintsAction;
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.calculations.AutomatedCalculationsAction;
+import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.calculations.ComputeCommonalitiesAction;
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.calculations.ConstrainsCalculationsAction;
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.calculations.FeaturesOnlyCalculationAction;
 import de.ovgu.featureide.fm.ui.editors.featuremodel.actions.calculations.RunManualCalculationsAction;
@@ -313,6 +314,7 @@ public class FeatureDiagramEditor extends FeatureModelEditorPage implements GUID
 		calculationActions = new ArrayList<>(4);
 		calculationActions.add(addAction(new AutomatedCalculationsAction(graphicalFeatureModel.getFeatureModelManager())));
 		calculationActions.add(addAction(new RunManualCalculationsAction(graphicalFeatureModel.getFeatureModelManager())));
+		calculationActions.add(addAction(new ComputeCommonalitiesAction(graphicalFeatureModel.getFeatureModelManager())));
 		calculationActions.add(addAction(new FeaturesOnlyCalculationAction(graphicalFeatureModel.getFeatureModelManager())));
 		calculationActions.add(addAction(new ConstrainsCalculationsAction(graphicalFeatureModel.getFeatureModelManager())));
 

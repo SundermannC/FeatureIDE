@@ -20,6 +20,7 @@
  */
 package de.ovgu.featureide.fm.core.configuration;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -156,7 +157,7 @@ public class ConfigurationPropagator implements IConfigurationPropagator {
 		}
 	}
 
-	public class CountSolutionsMethod implements LongRunningMethod<Long> {
+	public class CountSolutionsMethod implements LongRunningMethod<BigInteger> {
 
 		private final int timeout;
 
@@ -165,16 +166,15 @@ public class ConfigurationPropagator implements IConfigurationPropagator {
 		}
 
 		@Override
-		public Long execute(IMonitor<Long> monitor) throws Exception {
+		public BigInteger execute(IMonitor<BigInteger> monitor) throws Exception {
 			if (formula == null) {
-				return 0L;
+				return BigInteger.ZERO;
 			}
-			final AdvancedSatSolver solver = getSolverForCurrentConfiguration(false, false);
-			if (solver == null) {
-				return 0L;
+			final CNF configCnf = getPartialConfigCnf();
+			if (configCnf == null) {
+				return BigInteger.ZERO;
 			}
-			solver.setTimeout(timeout);
-			return new CountSolutionsAnalysis(solver).analyze(monitor);
+			return new CountSolutionsAnalysis(configCnf, 1).analyze(monitor);
 		}
 
 	}
@@ -544,6 +544,18 @@ public class ConfigurationPropagator implements IConfigurationPropagator {
 			}
 		}
 		return solver;
+	}
+
+	protected CNF getPartialConfigCnf() {
+		final CNF cnf = getSolver(false).getSatInstance().clone();
+		for (final SelectableFeature feature : configuration.getFeatures()) {
+			if (feature.getSelection() == Selection.SELECTED) {
+				cnf.addClause(new LiteralSet(cnf.getVariables().getVariable(feature.getName())));
+			} else if (feature.getSelection() == Selection.UNSELECTED) {
+				cnf.addClause(new LiteralSet(-cnf.getVariables().getVariable(feature.getName())));
+			}
+		}
+		return cnf;
 	}
 
 	protected AdvancedSatSolver getSolver(boolean includeHiddenFeatures) {

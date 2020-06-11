@@ -25,7 +25,6 @@ import static de.ovgu.featureide.fm.core.localization.StringTable.ARIAL;
 import static de.ovgu.featureide.fm.core.localization.StringTable.CALCULATING____;
 import static de.ovgu.featureide.fm.core.localization.StringTable.CONFLICTING_COMMA_;
 import static de.ovgu.featureide.fm.core.localization.StringTable.INVALID_COMMA_;
-import static de.ovgu.featureide.fm.core.localization.StringTable.MORE_THAN;
 import static de.ovgu.featureide.fm.core.localization.StringTable.POSSIBLE_CONFIGURATIONS;
 import static de.ovgu.featureide.fm.core.localization.StringTable.THERE_IS_NO_FEATURE_MODEL_CORRESPONDING_TO_THIS_CONFIGURATION_COMMA__REOPEN_THE_EDITOR_AND_SELECT_ONE_;
 import static de.ovgu.featureide.fm.core.localization.StringTable.THE_FEATURE_MODEL_FOR_THIS_PROJECT_IS_VOID_COMMA__I_E__COMMA__THERE_IS_NO_VALID_CONFIGURATION__YOU_NEED_TO_CORRECT_THE_FEATURE_MODEL_BEFORE_YOU_CAN_CREATE_OR_EDIT_CONFIGURATIONS_;
@@ -33,6 +32,7 @@ import static de.ovgu.featureide.fm.core.localization.StringTable.THE_GIVEN_FEAT
 import static de.ovgu.featureide.fm.core.localization.StringTable.VALID_COMMA_;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -665,14 +665,9 @@ public abstract class ConfigurationTreeEditorPage extends EditorPart implements 
 			sb.append(POSSIBLE_CONFIGURATIONS);
 			display.asyncExec(() -> setResolveButton(true));
 		} else {
-			final long number = conflicting ? 0 : LongRunningWrapper.runMethod(propagator.number(250));
+			final BigInteger number = conflicting ? BigInteger.ZERO : LongRunningWrapper.runMethod(propagator.number(250));
 			sb.append(valid ? VALID_COMMA_ : INVALID_COMMA_);
-			if (number < 0) {
-				sb.append(MORE_THAN);
-				sb.append(-1 - number);
-			} else {
-				sb.append(number);
-			}
+			sb.append(number.toString());
 			sb.append(POSSIBLE_CONFIGURATIONS);
 			display.asyncExec(() -> setResolveButton(false));
 		}

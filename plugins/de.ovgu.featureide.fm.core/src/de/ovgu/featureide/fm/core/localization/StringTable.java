@@ -457,6 +457,7 @@ public class StringTable {
 	public static final String CALCULATE_FEATURES = "Calculate Features";
 	public static final String CALCULATE_REDUNDANT_CONSTRAINTS = "Calculate Redundant Constraints";
 	public static final String RUN_MANUAL_CALCULATIONS = "Run Manual Calculations";
+	public static final String COMPUTE_COMMONALITIES = "Compute Feature Commonalities";
 	public static final String CALCULATE_TAUTOLOGY_CONSTRAINTS = "Calculate Tautology Constraints";
 	public static final String CHANGE_DESCRIPTION = "Change Description";
 	public static final String FEATURE_DESCRIPTION = "Feature Description";
@@ -494,6 +495,7 @@ public class StringTable {
 	public static final String IS_DEAD = "is dead ";
 	public static final String IS_FALSE_OPTIONAL = "is false optional ";
 	public static final String IS_HIDDEN_AND_INDETERMINATE = "is indeterminate"; // "hidden" was removed, see #228
+	public static final String COMMONALITY = "Commonality: ";
 	public static final String FEATURE_MODEL_IS_VOID = " Feature model is void ";
 	public static final String ROOT = " Root ";
 	public static final String VOID_FEATURE_MODEL = "Void Feature Model";

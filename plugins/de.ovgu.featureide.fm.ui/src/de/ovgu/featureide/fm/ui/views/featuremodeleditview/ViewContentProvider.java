@@ -26,7 +26,6 @@ import static de.ovgu.featureide.fm.core.localization.StringTable.CALCULATE_NUMB
 import static de.ovgu.featureide.fm.core.localization.StringTable.CALCULATING___;
 import static de.ovgu.featureide.fm.core.localization.StringTable.COMPARE_MODELS;
 import static de.ovgu.featureide.fm.core.localization.StringTable.CONFIGURATIONS;
-import static de.ovgu.featureide.fm.core.localization.StringTable.MORE_THAN;
 import static de.ovgu.featureide.fm.core.localization.StringTable.NUMBER_OF;
 import static de.ovgu.featureide.fm.core.localization.StringTable.OPEN_A_FEATURE_MODEL_;
 import static de.ovgu.featureide.fm.core.localization.StringTable.PROGRAM_VARIANTS;
@@ -38,6 +37,7 @@ import static de.ovgu.featureide.fm.core.localization.StringTable.TIMEOUT_STRING
 import static de.ovgu.featureide.fm.core.localization.StringTable.WAITING_FOR_SUBTASKS_TO_FINISH;
 import static de.ovgu.featureide.fm.core.localization.StringTable.WAITING_FOR_SUBTASK_TO_FINISH;
 
+import java.math.BigInteger;
 import java.util.ConcurrentModificationException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -464,13 +464,9 @@ public class ViewContentProvider implements IStructuredContentProvider, ITreeCon
 		}
 		final ConfigurationAnalyzer analyzer = new ConfigurationAnalyzer(model, new Configuration(model));
 		analyzer.setIncludeAbstractFeatures(!ignoreAbstractFeatures);
-		final long number = analyzer.number(TIMEOUT_CONFIGURATION);
+		final BigInteger number = analyzer.number(TIMEOUT_CONFIGURATION);
 		String s = "";
-		if (number < 0) {
-			s += MORE_THAN + (-1 - number);
-		} else {
-			s += number;
-		}
+		s += number.toString();
 		s += " " + variants;
 		p.addChild(s);
 		return p;

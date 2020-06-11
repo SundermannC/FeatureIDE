@@ -20,6 +20,7 @@
  */
 package de.ovgu.featureide.fm.core.base.impl;
 
+import static de.ovgu.featureide.fm.core.localization.StringTable.COMMONALITY;
 import static de.ovgu.featureide.fm.core.localization.StringTable.CONCRETE;
 import static de.ovgu.featureide.fm.core.localization.StringTable.FEATURE_MODEL_IS_VOID;
 import static de.ovgu.featureide.fm.core.localization.StringTable.INHERITED_HIDDEN;
@@ -159,6 +160,9 @@ public class Feature extends AFeature {
 					toolTip.append(IS_FALSE_OPTIONAL);
 				} else if (featureProperties.hasStatus(FeatureStatus.INDETERMINATE_HIDDEN)) {
 					toolTip.append(IS_HIDDEN_AND_INDETERMINATE);
+				}
+				if (featureProperties.getCommonality() != null) {
+					toolTip.append("\n " + COMMONALITY + featureProperties.getCommonality());
 				}
 			}
 		}
