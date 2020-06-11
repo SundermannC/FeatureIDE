@@ -36,7 +36,7 @@ public class ComparableDsharp implements IComparableSolver {
 	public SolverResult executeSolver(CNF cnf, long timeout, boolean saveResultingFormat) throws InterruptedException {
 		DIMACSUtils.createTemporaryDimacs(cnf);
 		final BinaryResult binaryResult = executeSolver(DIMACSUtils.TEMPORARY_DIMACS_PATH, timeout, saveResultingFormat);
-		return getResult(binaryResult.stdout);
+		return getResult(binaryResult);
 
 	}
 
@@ -53,12 +53,18 @@ public class ComparableDsharp implements IComparableSolver {
 	}
 
 	@Override
-	public SolverResult getResult(String output) {
-		if (isUNSAT(output)) {
+	public SolverResult getResult(BinaryResult binaryResult) {
+		if (binaryResult.status == SolverStatus.TIMEOUT) {
+			return SolverResult.getTimeoutResult();
+		} else if (binaryResult.status == SolverStatus.MEMORY_LIMIT_REACHED) {
+			return SolverResult.getMemoryLimitResult();
+		}
+
+		if (isUNSAT(binaryResult.stdout)) {
 			return SolverResult.getSolvedResult("0");
 		}
 		final Pattern pattern = Pattern.compile("\\#SAT \\(full\\).*\\d*");
-		final Matcher matcher = pattern.matcher(output);
+		final Matcher matcher = pattern.matcher(binaryResult.stdout);
 		String result = "";
 		if (matcher.find()) {
 			result = matcher.group();

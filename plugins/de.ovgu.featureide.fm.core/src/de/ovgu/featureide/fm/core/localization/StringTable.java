@@ -626,6 +626,8 @@ public class StringTable {
 	public static final String ZERO = "zero";
 	public static final String PRODUCT = "Product ";
 	public static final String TIMEOUT_STRING = "timeout";
+	public static final String OUT_OF_MEMORY_STRING = "out of memory";
+	public static final String SHARPSAT_UNEXPECTED_ERROR_STRING = "unexpected error when invoking solver";
 	public static final String SOURCE_PATH = "Source Path";
 	public static final String BUILD_PATH = "Build Path";
 	public static final String CONFIG_PATH = "Config Path";

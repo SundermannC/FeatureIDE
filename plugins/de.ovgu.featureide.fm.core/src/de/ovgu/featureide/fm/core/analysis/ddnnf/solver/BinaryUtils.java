@@ -12,7 +12,7 @@ public class BinaryUtils {
 		try {
 			final Process ps = rt.exec(command);
 			try {
-				if (!ps.waitFor(timeout, TimeUnit.MINUTES)) {
+				if (!ps.waitFor(timeout, TimeUnit.MILLISECONDS)) {
 					ps.destroy();
 					return new BinaryResult("", SolverStatus.TIMEOUT);
 				}

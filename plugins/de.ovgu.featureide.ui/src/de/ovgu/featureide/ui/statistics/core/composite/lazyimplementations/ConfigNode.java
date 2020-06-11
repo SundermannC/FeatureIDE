@@ -21,10 +21,14 @@
 package de.ovgu.featureide.ui.statistics.core.composite.lazyimplementations;
 
 import static de.ovgu.featureide.fm.core.localization.StringTable.CALCULATING;
+import static de.ovgu.featureide.fm.core.localization.StringTable.OUT_OF_MEMORY_STRING;
+import static de.ovgu.featureide.fm.core.localization.StringTable.SHARPSAT_UNEXPECTED_ERROR_STRING;
+import static de.ovgu.featureide.fm.core.localization.StringTable.TIMEOUT_STRING;
 
 import java.math.BigInteger;
 
 import de.ovgu.featureide.fm.core.analysis.cnf.formula.FeatureModelFormula;
+import de.ovgu.featureide.fm.core.analysis.ddnnf.solver.IComparableSolver;
 import de.ovgu.featureide.fm.core.configuration.Configuration;
 import de.ovgu.featureide.fm.core.configuration.ConfigurationAnalyzer;
 import de.ovgu.featureide.fm.core.job.IRunner;
@@ -66,7 +70,13 @@ public class ConfigNode extends Parent {
 				final ConfigurationAnalyzer analyzer = new ConfigurationAnalyzer(innerModel, new Configuration(innerModel));
 				analyzer.setIncludeAbstractFeatures(!removeAbstract);
 				final BigInteger number = analyzer.number(timeout);
-
+				if (number.equals(IComparableSolver.TIMEOUT_FLAG)) {
+					return TIMEOUT_STRING;
+				} else if (number.equals(IComparableSolver.MEMORYOUT_FLAG)) {
+					return OUT_OF_MEMORY_STRING;
+				} else if (number.equals(IComparableSolver.UNEXPECTED_ERROR)) {
+					return SHARPSAT_UNEXPECTED_ERROR_STRING;
+				}
 				return number.toString();
 			}
 

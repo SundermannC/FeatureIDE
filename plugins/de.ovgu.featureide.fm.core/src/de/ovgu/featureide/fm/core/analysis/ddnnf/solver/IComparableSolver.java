@@ -1,8 +1,16 @@
 package de.ovgu.featureide.fm.core.analysis.ddnnf.solver;
 
+import java.math.BigInteger;
+
 import de.ovgu.featureide.fm.core.analysis.cnf.CNF;
 
 public interface IComparableSolver {
+
+	public static final BigInteger TIMEOUT_FLAG = BigInteger.valueOf(-1);
+
+	public static final BigInteger MEMORYOUT_FLAG = BigInteger.valueOf(-2);
+
+	public static final BigInteger UNEXPECTED_ERROR = BigInteger.valueOf(-3);
 
 	public static final String DDNNF_TEMP_PATH = "temp.dimacs.nnf";
 
@@ -10,7 +18,7 @@ public interface IComparableSolver {
 
 	public BinaryResult executeSolver(String dimacsPath, long timeout) throws InterruptedException;
 
-	public SolverResult getResult(String output);
+	public SolverResult getResult(BinaryResult binaryResult);
 
 	public String getComputedMetaData(String output);
 

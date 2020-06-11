@@ -46,7 +46,7 @@ public class CountSolutionsAnalysis extends AbstractAnalysis<BigInteger> {
 
 	@Override
 	public BigInteger analyze(IMonitor<BigInteger> monitor) throws Exception {
-		final IComparableSolver sharpsat = new ComparableDsharp(8000);
+		final IComparableSolver sharpsat = new ComparableDsharp(1024);
 		final BigInteger result = sharpsat.executeSolver(solver.getSatInstance(), getTimeout(), false).result;
 
 		return result;

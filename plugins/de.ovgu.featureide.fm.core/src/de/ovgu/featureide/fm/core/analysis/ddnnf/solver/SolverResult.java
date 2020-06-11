@@ -20,12 +20,12 @@ public class SolverResult {
 		return new SolverResult(SolverStatus.UNEXPECTED, new BigInteger("-1"));
 	}
 
-	public static SolverResult getNoResult() {
-		return new SolverResult(SolverStatus.SOLVED, new BigInteger("-1"));
+	public static SolverResult getMemoryLimitResult() {
+		return new SolverResult(SolverStatus.MEMORY_LIMIT_REACHED, IComparableSolver.MEMORYOUT_FLAG);
 	}
 
-	public static SolverResult getMemoryLimitResult() {
-		return new SolverResult(SolverStatus.MEMORY_LIMIT_REACHED, new BigInteger("-1"));
+	public static SolverResult getTimeoutResult() {
+		return new SolverResult(SolverStatus.TIMEOUT, IComparableSolver.TIMEOUT_FLAG);
 	}
 
 	public static SolverResult getSolvedResult(String numberOfSolutionsString) {

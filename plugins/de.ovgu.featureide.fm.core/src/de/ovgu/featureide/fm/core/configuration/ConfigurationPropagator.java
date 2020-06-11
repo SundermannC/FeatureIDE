@@ -174,7 +174,7 @@ public class ConfigurationPropagator implements IConfigurationPropagator {
 			if (configCnf == null) {
 				return BigInteger.ZERO;
 			}
-			return new CountSolutionsAnalysis(configCnf, 1).analyze(monitor);
+			return new CountSolutionsAnalysis(configCnf, timeout).analyze(monitor);
 		}
 
 	}
