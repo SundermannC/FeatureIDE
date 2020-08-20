@@ -420,7 +420,7 @@ public abstract class ConfigurationTreeEditorPage extends EditorPart implements 
 
 		autoComputeNumberButton = new ToolItem(toolbar, SWT.CHECK);
 		autoComputeNumberButton.setImage(IMAGE_RESOLVE);
-		autoComputeNumberButton.setToolTipText("Automatically Computer Number of Valid Configurations");
+		autoComputeNumberButton.setToolTipText("Automatically Compute Number of Valid Configurations");
 		autoComputeNumberButton.setEnabled(true);
 
 		autoComputeNumberButton.addSelectionListener(new SelectionListener() {
@@ -431,9 +431,7 @@ public abstract class ConfigurationTreeEditorPage extends EditorPart implements 
 			}
 
 			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				System.out.println();
-			}
+			public void widgetDefaultSelected(SelectionEvent e) {}
 		});
 
 		new ToolItem(toolbar, SWT.SEPARATOR);

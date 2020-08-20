@@ -1110,7 +1110,7 @@ public class FeatureDiagramEditor extends FeatureModelEditorPage implements GUID
 					}
 					menuManager.add(action);
 				}
-				menuManager.insert(2, new Separator());
+				menuManager.insert(3, new Separator());
 			}
 		});
 		return menuManager;
